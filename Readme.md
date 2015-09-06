@@ -49,6 +49,48 @@ Other choices:
 * [browserify vs webstack](http://blog.namangoel.com/browserify-vs-webpack-js-drama). For React apps webstack seems the better option? Not sure.
 * mocha vs jasmine|jest vs karma. For React apps jest seems the better option. 
 
+Minimal react app from scratch
+---
+
+Experimentally: instead of cloning some yeoman template start from scratch.
+Need JSX compiler at a minimum.
+
+```
+npm install -g gulp
+echo {} > package.json
+npm install --save-dev gulp
+npm install --save-dev gulp-react
+npm install --save-dev gulp-watch
+npm install --save-dev browserify
+...
+```
+
+Or easier get a premade minimal recipe:
+
+```
+wget https://gist.githubusercontent.com/Sigmus/9253068/raw/e44f4b
+01b74637cdfed6ec0329941d07e9c19bf7/gulpfile.js
+wget https://gist.githubusercontent.com/Sigmus/9253068/raw/e44f4b01b74637cdfed6ec0329941d07e9c19bf7/package.json
+npm install
+```
+
+Gives poor err msgs for whatever reason. Let's setup tools for manual build via cmd line without gulp for comparison:
+
+```
+npm install -g reactify
+npm install -g browserify
+browserify -t reactify src/app.js
+```
+
+Gave better error messages, the gulpfile is suboptimal. Now serving the
+browserified React app:
+
+```
+npm install express --save
+npm install -g nodemon
+nodemon src/server.js 
+```
+
 TODO:
 
 * https://react-bootstrap.github.io/ looks good, uses karma with React
