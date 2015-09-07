@@ -18,11 +18,22 @@ var TodoList = React.createClass({
     onChange: React.PropTypes.func.isRequired
   },
 
+  getInitialState: function() {
+    // filterText is not persisted on the server, it filters todo items in
+    // the current view.
+    // So it belongs in this.state.
+    return { filterText: "" };
+  },
+
   render: function () {
     var self = this;
     var outerDivStyle = {display: "flex"};
     var itemNodes =
-      this.props.items.map(function(item) {
+      this.props.items
+      .filter(function(item) { 
+        return item.text.indexOf(self.state.filterText) != -1;
+      })
+      .map(function(item) {
         return (
           <div style={outerDivStyle}
                key={item.id}
@@ -39,6 +50,14 @@ var TodoList = React.createClass({
       });
     return (
       <div>
+        <div>
+          <span>filter text:</span>
+          <input 
+             type="text"
+             value={this.state.filterText}
+             onChange={this.handleChangeFilter}
+          />
+        </div>
         {itemNodes}
         <button onClick={this.handleAddItem}>Add</button>
       </div>
@@ -68,6 +87,9 @@ var TodoList = React.createClass({
     };
     var modifiedItems = clone.concat([newItem]);
     this.props.onChange(modifiedItems);
+  },
+  handleChangeFilter: function(event) {
+    this.setState({filterText: event.target.value});
   }
 });
 

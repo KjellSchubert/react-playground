@@ -35,6 +35,8 @@ var TodoItem = React.createClass({
       {startTime: event.target.value}));
   },
   handleTextChange: function(event) {
+    // TODO? React.addons.update() could improve that slightly.
+    // Also see immutable.js
     this.props.onChange(_.assign(
       _.clone(this.props.item),
       {text: event.target.value}));
