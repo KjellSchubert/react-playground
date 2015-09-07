@@ -11,9 +11,13 @@ var generateUid = function() {
   return "local" + (_nextAvailableUid++);
 };
 
-// props.items
-// props.onChange
 var TodoList = React.createClass({
+
+  propTypes: {
+    items: React.PropTypes.array.isRequired,
+    onChange: React.PropTypes.func.isRequired
+  },
+
   render: function () {
     var self = this;
     var outerDivStyle = {display: "flex"};

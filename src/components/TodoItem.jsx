@@ -2,9 +2,18 @@
 var React = require('react');
 var _ = require('lodash');
 
-// props.item
-// props.onChange
 var TodoItem = React.createClass({
+
+  propTypes: {
+    item: React.PropTypes.shape({
+      startTime: React.PropTypes.oneOfType([
+                   React.PropTypes.string,
+                   React.PropTypes.number]),
+      text: React.PropTypes.string
+    }),
+    onChange: React.PropTypes.func.isRequired
+  },
+
   render: function () {
     return <div>
         <span>startTime:</span>
@@ -22,6 +31,7 @@ var TodoItem = React.createClass({
   handleStartTimeChange: function (event) {
     this.props.onChange(_.assign(
       _.clone(this.props.item),
+      // if you force Number here then typing becomes awkward
       {startTime: event.target.value}));
   },
   handleTextChange: function(event) {
